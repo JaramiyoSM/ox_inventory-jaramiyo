@@ -25,10 +25,14 @@ ox_libs {
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
-    'init.lua'
+    'init.lua',
+    'modules/jrmy/server.lua'
 }
 
-client_script 'init.lua'
+client_scripts {
+    'init.lua',
+    'modules/jrmy/client.lua'
+}
 
 ui_page 'web/build/index.html'
 

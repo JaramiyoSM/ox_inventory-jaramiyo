@@ -14,6 +14,7 @@ import InventoryContext from './InventoryContext';
 import { closeContextMenu } from '../../store/contextMenu';
 import Fade from '../utils/transitions/Fade';
 import { sfx } from '../../utils/sfx';
+import ActionsMenu from './ActionsMenu';
 
 const Inventory: React.FC = () => {
   const [inventoryVisible, setInventoryVisible] = useState(false);
@@ -54,6 +55,7 @@ const Inventory: React.FC = () => {
           <RightInventory />
           <Tooltip />
           <InventoryContext />
+          <ActionsMenu />
         </div>
       </Fade>
       <InventoryHotbar />
