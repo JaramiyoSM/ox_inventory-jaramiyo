@@ -54,6 +54,10 @@ $gridSize: 10.2vh;
 $gridGap: 2px;
 $containerSize: calc(#{$gridRows} * #{$gridSize + 0.22vh} + #{$gridRows} * #{$gridGap});
 
+:root {
+  --jaccent: #d9738f;
+}
+
 body {
   margin: 0;
   font-family: $bodyFont, 'Baloo 2', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -1089,6 +1093,472 @@ body.inv-dragging {
 }
 
 .jrmy-mj-foot {
+  padding: 10px 16px;
+  border-top: 1px solid $line;
+  text-align: right;
+  font-family: $numFont;
+  font-size: 12px;
+  color: rgba(246, 234, 230, 0.5);
+}
+
+// =====================================================================
+//  Tabbed panel layout (single panel · 3 tabs) — Jaramiyo
+//  --jaccent is the live accent set by the Color-principal picker.
+// =====================================================================
+.jinv-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 6vh;
+}
+
+.jinv-panel {
+  width: 30vw;
+  min-width: 380px;
+  max-width: 460px;
+  background: $cacao;
+  border: 1px solid $line;
+  border-radius: 20px;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.jinv-tabbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 12px 0;
+}
+.jinv-tab {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  border: none;
+  border-radius: 13px 13px 0 0;
+  background: $ink;
+  color: rgba(246, 234, 230, 0.55);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+  &:hover {
+    color: $rose;
+  }
+  &.active {
+    background: var(--jaccent);
+    color: $onRose;
+  }
+}
+
+.jinv-content {
+  padding: 16px;
+}
+
+.jinv-tab-inventory {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.jinv-tab-inventory .inventory-grid-wrapper {
+  box-shadow: none;
+  background: $ink;
+  border-radius: 14px;
+}
+.jinv-tab-inventory .inventory-grid-container {
+  height: auto;
+  max-height: 34vh;
+}
+
+.jinv-controlbar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.jinv-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  height: 40px;
+  padding: 0 12px;
+  background: $ink;
+  border: 1px solid $line;
+  border-radius: 11px;
+  .jinv-qty-cap {
+    font-family: $mainFont;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: rgba(246, 234, 230, 0.55);
+  }
+  input {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    text-align: right;
+    color: $cream;
+    font-family: $numFont;
+    font-weight: 700;
+    font-size: 15px;
+  }
+}
+.jinv-cbtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 15px;
+  border: none;
+  border-radius: 11px;
+  background: var(--jaccent);
+  color: $onRose;
+  font-family: $mainFont;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: $sticker;
+  transition: transform 0.15s $pop, filter 0.15s ease;
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+  &:hover {
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+  }
+  &.ghost {
+    background: $cacao2;
+    color: $cream;
+  }
+}
+
+.jinv-sec {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 34px;
+  margin: 4px 0 12px;
+  background: linear-gradient(90deg, $rose, var(--jaccent));
+  color: $onRose;
+  border-radius: 11px;
+  font-family: $mainFont;
+  font-weight: 800;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: $sticker;
+  &:not(:first-child) {
+    margin-top: 18px;
+  }
+}
+
+.jinv-cloth {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.jinv-cslot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 6px 9px;
+  background: $ink;
+  border: 1px solid $line;
+  border-radius: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s $pop, box-shadow 0.15s ease;
+  span:last-child {
+    font-family: $mainFont;
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: $cream;
+    text-align: center;
+    letter-spacing: 0.2px;
+  }
+  &:hover {
+    border-color: var(--jaccent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+  }
+  &:hover .jinv-cico {
+    background: var(--jaccent);
+  }
+}
+.jinv-cico {
+  width: 28px;
+  height: 28px;
+  background: $rose;
+  -webkit-mask: var(--src) center/contain no-repeat;
+  mask: var(--src) center/contain no-repeat;
+  transition: background 0.15s ease;
+}
+
+.jinv-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.jinv-act {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 13px;
+  background: $ink;
+  border: 1px solid $line;
+  border-left: 3px solid var(--jaccent);
+  border-radius: 12px;
+  cursor: pointer;
+  color: $cream;
+  transition: background 0.15s ease, transform 0.15s $pop;
+  svg {
+    width: 19px;
+    height: 19px;
+    flex: none;
+    color: $rose;
+  }
+  span {
+    font-family: $mainFont;
+    font-weight: 700;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  &:hover {
+    background: rgba(217, 115, 143, 0.14);
+    transform: translateX(3px);
+  }
+  &:hover svg {
+    color: var(--jaccent);
+  }
+}
+
+.jinv-ctrl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 13px;
+  background: $ink;
+  border: 1px solid $line;
+  border-radius: 11px;
+  margin-bottom: 7px;
+}
+.jinv-ctrl-keys {
+  display: flex;
+  gap: 5px;
+}
+.jinv-kbd {
+  font-family: $mainFont;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 4px 9px;
+  background: $cacao2;
+  border: 1px solid $line;
+  border-radius: 7px;
+  color: $cream;
+}
+.jinv-ctrl-desc {
+  font-family: $bodyFont;
+  font-size: 12px;
+  color: rgba(246, 234, 230, 0.72);
+  text-align: right;
+}
+.jinv-swatches {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+.jinv-sw {
+  aspect-ratio: 1;
+  border-radius: 9px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s $pop;
+  &:hover {
+    transform: scale(1.12);
+  }
+  &.sel {
+    border-color: $cream;
+    box-shadow: 0 0 0 3px rgba(246, 234, 230, 0.25);
+  }
+}
+
+.jinv-mj-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 40;
+}
+.jinv-mj-panel {
+  width: 330px;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  background: $cacao;
+  border: 1px solid $line;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.jinv-mj-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid $line;
+}
+.jinv-mj-title {
+  font-family: $mainFont;
+  font-weight: 800;
+  font-size: 17px;
+  color: $cream;
+}
+.jinv-mj-close {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  color: $rose;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s $pop;
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+  &:hover {
+    background: $secondaryColorHighlight;
+    transform: rotate(90deg);
+  }
+}
+.jinv-mj-body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 16px;
+  overflow-y: auto;
+}
+.jinv-mj-empty {
+  text-align: center;
+  color: rgba(246, 234, 230, 0.5);
+  font-family: $bodyFont;
+  font-size: 14px;
+  padding: 18px 0;
+}
+.jinv-mj-slot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: $ink;
+  border: 1px solid $line;
+  &.is-active {
+    border-color: var(--jaccent);
+    background: rgba(217, 115, 143, 0.14);
+  }
+}
+.jinv-mj-slot-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.jinv-mj-slot-label {
+  font-family: $mainFont;
+  font-weight: 700;
+  font-size: 14px;
+  color: $cream;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jinv-mj-slot-grade {
+  font-family: $bodyFont;
+  font-size: 11px;
+  color: rgba(246, 234, 230, 0.5);
+}
+.jinv-mj-badge {
+  flex: none;
+  font-family: $mainFont;
+  font-weight: 800;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: $onRose;
+  background: var(--jaccent);
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+.jinv-mj-slot-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+.jinv-mj-cta {
+  border: none;
+  border-radius: 9px;
+  background: var(--jaccent);
+  color: $onRose;
+  font-family: $mainFont;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.28);
+  transition: transform 0.15s $pop, filter 0.15s ease;
+  &:hover {
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.28);
+  }
+}
+.jinv-mj-leave {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid $line;
+  border-radius: 9px;
+  background: transparent;
+  color: rgba(246, 234, 230, 0.6);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+  &:hover {
+    border-color: $roseHot;
+    color: $roseHot;
+    background: rgba(217, 115, 143, 0.12);
+  }
+}
+.jinv-mj-foot {
   padding: 10px 16px;
   border-top: 1px solid $line;
   text-align: right;

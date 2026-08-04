@@ -29,6 +29,58 @@ RegisterNUICallback('jrmyToggleHair', function(_, cb)
     end
 end)
 
+-- Toggle a clothing piece on/off. Native and fail-safe: it stores the current
+-- component/prop and puts it back, so a piece can never get stuck. Components
+-- hide by drawable 0; props hide with ClearPedProp.
+local CLOTHING = {
+    mask = { kind = 'comp', id = 1 },
+    hat = { kind = 'prop', id = 0 },
+    glasses = { kind = 'prop', id = 1 },
+    neck = { kind = 'comp', id = 7 },
+    top = { kind = 'comp', id = 11 },
+    vest = { kind = 'comp', id = 9 },
+    torso = { kind = 'comp', id = 3 },
+    bag = { kind = 'comp', id = 5 },
+    watch = { kind = 'prop', id = 6 },
+    gloves = { kind = 'comp', id = 3 },
+    pants = { kind = 'comp', id = 4 },
+    shoes = { kind = 'comp', id = 6 },
+}
+local savedClothing = {}
+
+RegisterNUICallback('jrmyToggleClothing', function(data, cb)
+    cb(1)
+
+    local piece = CLOTHING[data.piece]
+    if not piece then return end
+
+    local ped = cache.ped or PlayerPedId()
+    local saved = savedClothing[data.piece]
+
+    if saved then
+        if piece.kind == 'comp' then
+            SetPedComponentVariation(ped, piece.id, saved.drawable, saved.texture, 0)
+        elseif saved.drawable == -1 then
+            ClearPedProp(ped, piece.id)
+        else
+            SetPedPropIndex(ped, piece.id, saved.drawable, saved.texture, true)
+        end
+        savedClothing[data.piece] = nil
+    elseif piece.kind == 'comp' then
+        savedClothing[data.piece] = {
+            drawable = GetPedDrawableVariation(ped, piece.id),
+            texture = GetPedTextureVariation(ped, piece.id),
+        }
+        SetPedComponentVariation(ped, piece.id, 0, 0, 0)
+    else
+        savedClothing[data.piece] = {
+            drawable = GetPedPropIndex(ped, piece.id),
+            texture = GetPedPropTextureIndex(ped, piece.id),
+        }
+        ClearPedProp(ped, piece.id)
+    end
+end)
+
 -- Multi-job: the window asks for the list when it opens.
 RegisterNUICallback('jrmyMultijobGet', function(_, cb)
     cb(lib.callback.await('ox_inventory:jrmyMultijobGet', false) or { active = '', jobs = {}, max = 3 })

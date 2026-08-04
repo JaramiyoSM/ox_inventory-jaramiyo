@@ -1,11 +1,18 @@
 # ox_inventory &#183; Jaramiyo's cute edit ✿
 
-A cute reskin **and rich rebuild** of ox_inventory in my soft cacao + rose "uwu"
-style: each inventory is a rounded cacao card with a header (icon + name +
-weight), a live item **search**, warm slots that lift and glow rose on hover,
-cute tooltips / context menu / hotbar, redesigned item notifications, bundled
-fonts, little synth **sound effects** (with a mute toggle), and a small
-**actions menu** with two extras — **Multi Job** and **toggle hair**.
+A cute rebuild of ox_inventory in my soft cacao + rose "uwu" style: a single
+rounded panel with **three tabs** —
+
+- **Inventory** — your inventory and the secondary one, each a card with a header
+  (icon + name + weight) and a live item **search**, plus a bottom control bar.
+- **Appearance** — **clothing** slots you can toggle on/off (native) and an
+  **actions** section with two extras: **Multi Job** and **toggle hair**.
+- **Settings** — the controls cheatsheet and a **colour picker** that re-tints
+  the whole UI live (and remembers your choice).
+
+Warm slots that lift and glow rose on hover, cute tooltips / context menu /
+hotbar, redesigned item notifications, bundled fonts, and little synth **sound
+effects** (with a mute toggle).
 
 The whole visual layer is my own clean source (no compiled black boxes). All of
 ox_inventory's original systems — items, stashes, shops, crafting, weapons,
