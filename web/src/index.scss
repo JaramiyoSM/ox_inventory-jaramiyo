@@ -1180,10 +1180,20 @@ body.inv-dragging {
   gap: 4px;
   height: auto;
   max-height: 30vh;
+  overflow-x: hidden;
 }
 .jinv-tab-inventory .inventory-slot {
+  box-sizing: border-box;
   aspect-ratio: 1;
   background-size: 60%;
+}
+.jinv-tab-inventory .inventory-slot .item-slot-info-wrapper {
+  padding: 2px;
+  gap: 2px;
+}
+.jinv-tab-inventory .inventory-slot .item-slot-info-wrapper p,
+.jinv-tab-inventory .inventory-slot .inventory-slot-label-text {
+  font-size: 9.5px;
 }
 
 .jinv-controlbar {
