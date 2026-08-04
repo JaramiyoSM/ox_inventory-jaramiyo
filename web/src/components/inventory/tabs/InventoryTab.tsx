@@ -1,7 +1,6 @@
 import React from 'react';
 import LeftInventory from '../LeftInventory';
 import RightInventory from '../RightInventory';
-import ControlBar from '../ControlBar';
 import { useAppSelector } from '../../../store';
 import { selectRightInventory } from '../../../store/inventory';
 
@@ -15,7 +14,6 @@ const InventoryTab: React.FC = () => {
     <div className="jinv-tab-inventory">
       <LeftInventory />
       {showRight && <RightInventory />}
-      <ControlBar />
     </div>
   );
 };

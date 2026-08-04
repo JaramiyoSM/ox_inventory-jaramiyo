@@ -15,6 +15,7 @@ import TabBar, { InvTab } from './TabBar';
 import InventoryTab from './tabs/InventoryTab';
 import PersonaTab from './tabs/PersonaTab';
 import SettingsTab, { applySavedAccent } from './tabs/SettingsTab';
+import ControlBar from './ControlBar';
 
 const Inventory: React.FC = () => {
   const [inventoryVisible, setInventoryVisible] = useState(false);
@@ -60,6 +61,7 @@ const Inventory: React.FC = () => {
               {tab === 'person' && <PersonaTab />}
               {tab === 'settings' && <SettingsTab />}
             </div>
+            {tab === 'inv' && <ControlBar />}
           </div>
           <Tooltip />
           <InventoryContext />

@@ -67,7 +67,7 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
         </div>
         <input
           className="inventory-search-input"
-          placeholder={Locale.ui_search || 'Search'}
+          placeholder={Locale.ui_search || 'Buscar...'}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           spellCheck={false}
