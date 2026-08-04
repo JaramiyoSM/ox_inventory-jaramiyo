@@ -27,23 +27,17 @@ export const useItemNotifications = () => {
 const ItemNotification = React.forwardRef(
   (props: { item: ItemNotificationProps; style?: React.CSSProperties }, ref: React.ForwardedRef<HTMLDivElement>) => {
     const slotItem = props.item.item;
+    const label = slotItem.metadata?.label || Items[slotItem.name]?.label || slotItem.name;
 
     return (
-      <div
-        className="item-notification-item-box"
-        style={{
-          backgroundImage: `url(${getItemUrl(slotItem) || 'none'}`,
-          ...props.style,
-        }}
-        ref={ref}
-      >
-        <div className="item-slot-wrapper">
-          <div className="item-notification-action-box">
-            <p>{props.item.text}</p>
-          </div>
-          <div className="inventory-slot-label-box">
-            <div className="inventory-slot-label-text">{slotItem.metadata?.label || Items[slotItem.name]?.label}</div>
-          </div>
+      <div className="item-notification" style={props.style} ref={ref}>
+        <div
+          className="item-notification-icon"
+          style={{ backgroundImage: `url(${getItemUrl(slotItem) || 'none'})` }}
+        />
+        <div className="item-notification-text">
+          <p className="item-notification-action">{props.item.text}</p>
+          <p className="item-notification-name">{label}</p>
         </div>
       </div>
     );
