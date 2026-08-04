@@ -1110,14 +1110,17 @@ body.inv-dragging {
   inset: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 6vh;
+  align-items: center;
+  padding: 3vh 0;
 }
 
 .jinv-panel {
-  width: 30vw;
-  min-width: 380px;
-  max-width: 460px;
+  width: 26vw;
+  min-width: 360px;
+  max-width: 430px;
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
   background: $cacao;
   border: 1px solid $line;
   border-radius: 20px;
@@ -1158,6 +1161,7 @@ body.inv-dragging {
 
 .jinv-content {
   padding: 16px;
+  overflow-y: auto;
 }
 
 .jinv-tab-inventory {
@@ -1171,8 +1175,15 @@ body.inv-dragging {
   border-radius: 14px;
 }
 .jinv-tab-inventory .inventory-grid-container {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  gap: 4px;
   height: auto;
-  max-height: 34vh;
+  max-height: 30vh;
+}
+.jinv-tab-inventory .inventory-slot {
+  aspect-ratio: 1;
+  background-size: 60%;
 }
 
 .jinv-controlbar {
