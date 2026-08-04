@@ -1110,8 +1110,8 @@ body.inv-dragging {
   inset: 0;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  padding: 3vh 5vw 3vh 0;
+  align-items: flex-end;
+  padding: 3vh 3vw 4vh 0;
 }
 
 .jinv-panel {
