@@ -18,7 +18,6 @@ import pants from '../../../assets/ropa/pants.png';
 import shoes from '../../../assets/ropa/shoes.png';
 import editorImg from '../../../assets/ropa/editor.webp';
 
-// each clothing slot toggles a ped component/prop server-side (native, handled in Lua)
 const CLOTH: { piece: string; icon: string; label: string }[] = [
   { piece: 'mask', icon: mask, label: 'Mask' },
   { piece: 'hat', icon: hat, label: 'Hat' },

@@ -1,16 +1,9 @@
-// Cute "uwu" sound effects for the inventory, synthesized on the fly with the
-// Web Audio API — no audio files, no assets, just soft little blips. The mute
-// choice is remembered in localStorage. Everything is lazy so nothing plays (or
-// even builds an AudioContext) until the first real interaction.
-
 let ctx: AudioContext | null = null;
 let muted = false;
 
 try {
   muted = localStorage.getItem('jrmy-inv-muted') === '1';
-} catch {
-  /* localStorage may be unavailable */
-}
+} catch {}
 
 const getCtx = (): AudioContext | null => {
   if (typeof window === 'undefined') return null;
@@ -102,9 +95,7 @@ export const sfx = {
     muted = !muted;
     try {
       localStorage.setItem('jrmy-inv-muted', muted ? '1' : '0');
-    } catch {
-      /* ignore */
-    }
+    } catch {}
     if (!muted) sfx.click();
     return muted;
   },

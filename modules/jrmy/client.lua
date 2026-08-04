@@ -1,15 +1,3 @@
--- =====================================================================
---  Jaramiyo inventory actions — client
---  Two extra actions for the inventory action menu:
---    · toggle hair  (native, no framework needed)
---    · multi-job    (bridges the NUI to the server; ESX / Qbox)
---  The server owns every multi-job decision and revalidates it, because a
---  NUI can be tampered with — the client only relays.
--- =====================================================================
-
--- Toggle the ped's hair on and off. Instant and fail-safe: it simply stores
--- the current hair (drawable + texture) and puts it back, so it can never get
--- stuck. Component 2 is hair; (0, 0) is the bald variation.
 local savedHair
 
 RegisterNUICallback('jrmyToggleHair', function(_, cb)
@@ -29,8 +17,6 @@ RegisterNUICallback('jrmyToggleHair', function(_, cb)
     end
 end)
 
--- Open the Rockstar editor. Native — the inventory closes and lets go of the
--- focus first, or the two interfaces fight over the mouse and it locks up.
 RegisterNUICallback('jrmyOpenEditor', function(_, cb)
     cb(1)
     exports.ox_inventory:closeInventory()
@@ -40,10 +26,6 @@ RegisterNUICallback('jrmyOpenEditor', function(_, cb)
     end)
 end)
 
--- Toggle a clothing piece on/off, with the dressing animation. Native and
--- fail-safe: stores what was on and restores it, so a piece can never get
--- stuck. Each ped component has its own "empty" value (EMPTY below); using 0
--- for everything would just swap to a default outfit instead of removing it.
 local COMPONENTS = { mask = 1, neck = 7, top = 11, vest = 9, torso = 3, bag = 5, gloves = 3, pants = 4, shoes = 6 }
 local PROPS = { hat = 0, glasses = 1, watch = 6 }
 local EMPTY = { [1] = 0, [3] = 15, [4] = 61, [5] = 0, [6] = 34, [7] = 0, [9] = 0, [11] = 15 }
@@ -74,7 +56,6 @@ local function playDressAnim(piece)
         tries = tries + 1
     end
     if not HasAnimDictLoaded(a.dict) then return 0 end
-    -- flag 49 = upper-body partial, so the player can keep walking
     TaskPlayAnim(cache.ped or PlayerPedId(), a.dict, a.name, 3.0, 3.0, -1, 49, 0, false, false, false)
     return a.wait
 end
@@ -95,15 +76,12 @@ RegisterNUICallback('jrmyToggleClothing', function(data, cb)
     local prop = PROPS[piece]
     if not comp and not prop then return end
 
-    -- one piece at a time, or spamming chains animations into a weird pose
     if clothingBusy then return end
     clothingBusy = true
 
     CreateThread(function()
-        -- pcall so clothingBusy is ALWAYS released, even if a native fails
         pcall(function()
             local wait = playDressAnim(piece)
-            -- the garment changes MID-gesture, not at the start
             if wait > 0 then Wait(wait) end
 
             local ped = cache.ped or PlayerPedId()
@@ -137,7 +115,6 @@ RegisterNUICallback('jrmyToggleClothing', function(data, cb)
     end)
 end)
 
--- Multi-job: the window asks for the list when it opens.
 RegisterNUICallback('jrmyMultijobGet', function(_, cb)
     cb(lib.callback.await('ox_inventory:jrmyMultijobGet', false) or { active = '', jobs = {}, max = 3 })
 end)

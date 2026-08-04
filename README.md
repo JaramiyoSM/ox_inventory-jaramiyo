@@ -1,25 +1,25 @@
 # ox_inventory &#183; Jaramiyo's cute edit ✿
 
-A cute rebuild of ox_inventory in my soft cacao + rose "uwu" style — a single
-rounded panel with **three tabs**:
+A cute rebuild of ox_inventory in my soft cacao + rose "uwu" style: a single
+rounded panel with **three tabs**.
 
-- **Inventory** &mdash; your inventory (and any container you open, stacked below),
-  each a card with a header (icon + name + weight) and a live **item search**,
-  plus a fixed control bar (quantity · use · give · close).
-- **Appearance** &mdash; **clothing** slots you can put on / take off with the
-  in-game dressing **animation**, and an **actions** section with two extras:
-  **Multi Job** and **toggle hair**.
-- **Settings** &mdash; the controls cheatsheet and a **colour picker** that
-  re-tints the whole UI live (and remembers your choice).
+- **Inventory**: your inventory (and any container you open, stacked below), each
+  a card with a header (icon + name + weight) and a live **item search**, plus a
+  fixed control bar (quantity · use · give · close).
+- **Appearance**: **clothing** slots you can put on / take off with the in-game
+  dressing **animation**, and an **actions** section with two extras, **Multi
+  Job** and **toggle hair**.
+- **Settings**: the controls cheatsheet and a **colour picker** that re-tints the
+  whole UI live (and remembers your choice).
 
 Warm slots that lift and glow on hover, cute tooltips / context menu / hotbar,
 redesigned item notifications, bundled fonts, and little synthesised **sound
-effects** — all my own clean source, no compiled black boxes. Everything is
-**bilingual (English / Spanish)** straight from `locales/`.
+effects**, all my own clean source. Everything is **bilingual (English /
+Spanish)** straight from `locales/`.
 
 The whole inventory is the full, open resource: ox_inventory's original systems
 (items, stashes, shops, crafting, weapons, weight, drag-and-drop) are
-Overextended's and untouched — I only rebuilt the interface and added the two
+Overextended's and untouched. I only rebuilt the interface and added the two
 extra actions.
 
 ## Configuration
@@ -27,10 +27,10 @@ extra actions.
 Everything is set with convars (put them in your `server.cfg`):
 
 ```cfg
-# accent colour framework picks up (players can also change it in Settings)
+# framework the Multi Job uses
 setr inventory:framework "esx"        # or "qbx"
 
-# Multi Job — how many jobs a player can hold in their pool
+# Multi Job: how many jobs a player can hold in their pool
 setr inventory:jrmyMaxJobs 3
 ```
 
@@ -66,12 +66,12 @@ npm run build
 
 ## Credits
 
-- **ox_inventory** by **[Overextended](https://github.com/overextended/ox_inventory)** (Linden, Luke, Dunak and contributors) &mdash; the entire inventory is their work.
+- **ox_inventory** by **[Overextended](https://github.com/overextended/ox_inventory)** (Linden, Luke, Dunak and contributors). The entire inventory is their work.
 - UI rebuild, sounds, and the Multi Job / appearance actions: **Jaramiyo** ✿
 
 ## License
 
 **GPL-3.0-or-later**, the same as the original. The full license text is in
-[LICENSE](LICENSE) and the attribution notice in [NOTICE.md](NOTICE.md) &mdash;
-both preserved as the licence requires. This is a modified version of
-ox_inventory, released under GPL-3.0-or-later as well.
+[LICENSE](LICENSE) and the attribution notice in [NOTICE.md](NOTICE.md), both
+preserved as the licence requires. This is a modified version of ox_inventory,
+released under GPL-3.0-or-later as well.

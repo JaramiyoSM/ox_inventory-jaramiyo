@@ -27,8 +27,6 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
     }
   }, [entry]);
 
-  // Search only dims non-matching items — it never removes or re-orders slots,
-  // so item positions and drag-and-drop stay exactly the same.
   const query = search.trim().toLowerCase();
   const itemLabel = (item: Inventory['items'][number]) =>
     (item.metadata?.label || (item.name && Items[item.name]?.label) || item.name || '').toString().toLowerCase();

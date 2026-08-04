@@ -12,12 +12,9 @@ export const applySavedAccent = () => {
   try {
     const saved = localStorage.getItem('jrmy-accent');
     if (saved) document.documentElement.style.setProperty('--jaccent', saved);
-  } catch {
-    /* ignore */
-  }
+  } catch {}
 };
 
-// resolved at render time so it follows the loaded locale
 const CONTROLS: { keys: string[]; key: string; fallback: string }[] = [
   { keys: ['RMB'], key: 'ui_rmb', fallback: 'Open the actions menu' },
   { keys: ['ALT', 'LMB'], key: 'ui_alt_lmb', fallback: 'Use the item' },
@@ -44,9 +41,7 @@ const SettingsTab: React.FC = () => {
     setAccent(c);
     try {
       localStorage.setItem('jrmy-accent', c);
-    } catch {
-      /* ignore */
-    }
+    } catch {}
   };
 
   return (
