@@ -91,6 +91,8 @@
   "not_enough_durability": "%s does not have enough durability",
   "storage": "Storage",
   "jrmy_search": "Search...",
+  "jrmy_quantity": "Quantity",
+  "jrmy_editor": "Rockstar Editor",
   "jrmy_clothing": "Clothing",
   "jrmy_actions": "Actions",
   "jrmy_multijob": "Multi Job",

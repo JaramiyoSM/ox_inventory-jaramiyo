@@ -715,7 +715,7 @@ body.inv-dragging {
   align-items: center;
   gap: 6px;
   position: absolute;
-  bottom: 20vh;
+  bottom: 7vh;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
@@ -1111,7 +1111,7 @@ body.inv-dragging {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  padding: 3vh 3vw 4vh 0;
+  padding: 3vh 1.2vw 4vh 0;
 }
 
 .jinv-panel {
@@ -1592,4 +1592,32 @@ body.inv-dragging {
   font-family: $numFont;
   font-size: 12px;
   color: rgba(246, 234, 230, 0.5);
+}
+
+.jinv-editor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid $line;
+  border-radius: 12px;
+  background: $ink;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s $pop, background 0.15s ease;
+  img {
+    height: 34px;
+    width: auto;
+    opacity: 0.88;
+    pointer-events: none;
+  }
+  &:hover {
+    border-color: var(--jaccent);
+    background: $cacao2;
+    transform: translateY(-1px);
+  }
+  &:hover img {
+    opacity: 1;
+  }
 }

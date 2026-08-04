@@ -57,7 +57,7 @@ const MultiJobPanel: React.FC<{ open: boolean; onClose: () => void }> = ({ open,
           {loading ? (
             <div className="jinv-mj-empty">…</div>
           ) : mj.jobs.length === 0 ? (
-            <div className="jinv-mj-empty">{Locale.jrmy_nojobs || 'Sin trabajos'}</div>
+            <div className="jinv-mj-empty">{Locale.jrmy_nojobs || 'No jobs yet'}</div>
           ) : (
             mj.jobs.map((job) => {
               const active = job.name === mj.active;
@@ -68,10 +68,10 @@ const MultiJobPanel: React.FC<{ open: boolean; onClose: () => void }> = ({ open,
                     {job.gradeLabel && <span className="jinv-mj-slot-grade">{job.gradeLabel}</span>}
                   </div>
                   {active ? (
-                    <span className="jinv-mj-badge">{Locale.jrmy_active || 'Activo'}</span>
+                    <span className="jinv-mj-badge">{Locale.jrmy_active || 'Active'}</span>
                   ) : (
                     <div className="jinv-mj-slot-actions">
-                      <button className="jinv-mj-cta" onClick={() => switchJob(job)}>{Locale.jrmy_switch || 'Cambiar'}</button>
+                      <button className="jinv-mj-cta" onClick={() => switchJob(job)}>{Locale.jrmy_switch || 'Switch'}</button>
                       <button className="jinv-mj-leave" onClick={() => leaveJob(job)} aria-label="leave">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /></svg>
                       </button>

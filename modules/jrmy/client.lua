@@ -29,6 +29,17 @@ RegisterNUICallback('jrmyToggleHair', function(_, cb)
     end
 end)
 
+-- Open the Rockstar editor. Native — the inventory closes and lets go of the
+-- focus first, or the two interfaces fight over the mouse and it locks up.
+RegisterNUICallback('jrmyOpenEditor', function(_, cb)
+    cb(1)
+    exports.ox_inventory:closeInventory()
+    CreateThread(function()
+        Wait(200)
+        ActivateRockstarEditor()
+    end)
+end)
+
 -- Toggle a clothing piece on/off, with the dressing animation. Native and
 -- fail-safe: stores what was on and restores it, so a piece can never get
 -- stuck. Each ped component has its own "empty" value (EMPTY below); using 0

@@ -80,18 +80,18 @@ const ControlBar: React.FC = () => {
   return (
     <div className="jinv-controlbar">
       <div className="jinv-qty">
-        <span className="jinv-qty-cap">{Locale.ui_quantity || 'Cantidad'}</span>
+        <span className="jinv-qty-cap">{Locale.jrmy_quantity || 'Quantity'}</span>
         <input ref={inputRef} type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} min={0} />
       </div>
-      <button className="jinv-cbtn" ref={(el) => { use(el); }}>
+      <button className="jinv-cbtn" ref={(el) => { use(el); }} onMouseEnter={() => sfx.hover()}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
-        {Locale.ui_use || 'Usar'}
+        {Locale.ui_use || 'Use'}
       </button>
-      <button className="jinv-cbtn ghost" ref={(el) => { give(el); }}>
+      <button className="jinv-cbtn ghost" ref={(el) => { give(el); }} onMouseEnter={() => sfx.hover()}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        {Locale.ui_give || 'Dar'}
+        {Locale.ui_give || 'Give'}
       </button>
-      <button className="jinv-cbtn ghost" onClick={() => { sfx.close(); fetchNui('exit'); }} aria-label="close">
+      <button className="jinv-cbtn ghost" onClick={() => { sfx.close(); fetchNui('exit'); }} onMouseEnter={() => sfx.hover()} aria-label="close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
       </button>
     </div>

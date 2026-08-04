@@ -21,6 +21,12 @@ const GearIcon = () => (
   </svg>
 );
 
+const TABS: { id: InvTab; Icon: React.FC; label: string }[] = [
+  { id: 'inv', Icon: GridIcon, label: 'inventory' },
+  { id: 'person', Icon: PersonIcon, label: 'appearance' },
+  { id: 'settings', Icon: GearIcon, label: 'settings' },
+];
+
 const TabBar: React.FC<{ tab: InvTab; setTab: (t: InvTab) => void }> = ({ tab, setTab }) => {
   const pick = (t: InvTab) => {
     if (t === tab) return;
@@ -30,15 +36,17 @@ const TabBar: React.FC<{ tab: InvTab; setTab: (t: InvTab) => void }> = ({ tab, s
 
   return (
     <div className="jinv-tabbar">
-      <button className={tab === 'inv' ? 'jinv-tab active' : 'jinv-tab'} onClick={() => pick('inv')} aria-label="inventory">
-        <GridIcon />
-      </button>
-      <button className={tab === 'person' ? 'jinv-tab active' : 'jinv-tab'} onClick={() => pick('person')} aria-label="appearance">
-        <PersonIcon />
-      </button>
-      <button className={tab === 'settings' ? 'jinv-tab active' : 'jinv-tab'} onClick={() => pick('settings')} aria-label="settings">
-        <GearIcon />
-      </button>
+      {TABS.map(({ id, Icon, label }) => (
+        <button
+          key={id}
+          className={tab === id ? 'jinv-tab active' : 'jinv-tab'}
+          onClick={() => pick(id)}
+          onMouseEnter={() => sfx.hover()}
+          aria-label={label}
+        >
+          <Icon />
+        </button>
+      ))}
     </div>
   );
 };

@@ -17,12 +17,13 @@ export const applySavedAccent = () => {
   }
 };
 
-const CONTROLS: { keys: string[]; desc: string }[] = [
-  { keys: ['RMB'], desc: Locale.ui_rmb || 'Abrir el menú de acciones' },
-  { keys: ['ALT', 'LMB'], desc: Locale.ui_alt_lmb || 'Usar el objeto' },
-  { keys: ['CTRL', 'LMB'], desc: Locale.ui_ctrl_lmb || 'Transferir rápido' },
-  { keys: ['SHIFT', 'Drag'], desc: Locale.ui_shift_drag || 'Dividir la pila' },
-  { keys: ['CTRL', 'SHIFT', 'LMB'], desc: Locale.ui_ctrl_shift_lmb || 'Transferir la pila entera' },
+// resolved at render time so it follows the loaded locale
+const CONTROLS: { keys: string[]; key: string; fallback: string }[] = [
+  { keys: ['RMB'], key: 'ui_rmb', fallback: 'Open the actions menu' },
+  { keys: ['ALT', 'LMB'], key: 'ui_alt_lmb', fallback: 'Use the item' },
+  { keys: ['CTRL', 'LMB'], key: 'ui_ctrl_lmb', fallback: 'Quick transfer' },
+  { keys: ['SHIFT', 'Drag'], key: 'ui_shift_drag', fallback: 'Split the stack' },
+  { keys: ['CTRL', 'SHIFT', 'LMB'], key: 'ui_ctrl_shift_lmb', fallback: 'Transfer the whole stack' },
 ];
 
 const SettingsTab: React.FC = () => {
@@ -50,7 +51,7 @@ const SettingsTab: React.FC = () => {
 
   return (
     <div className="jinv-tab-settings">
-      <div className="jinv-sec">{Locale.jrmy_controls || 'Controles'}</div>
+      <div className="jinv-sec">{Locale.jrmy_controls || 'Controls'}</div>
       {CONTROLS.map((c, i) => (
         <div className="jinv-ctrl" key={i}>
           <div className="jinv-ctrl-keys">
@@ -58,11 +59,11 @@ const SettingsTab: React.FC = () => {
               <span className="jinv-kbd" key={k}>{k}</span>
             ))}
           </div>
-          <div className="jinv-ctrl-desc">{c.desc}</div>
+          <div className="jinv-ctrl-desc">{Locale[c.key] || c.fallback}</div>
         </div>
       ))}
 
-      <div className="jinv-sec">{Locale.jrmy_maincolor || 'Color principal'}</div>
+      <div className="jinv-sec">{Locale.jrmy_maincolor || 'Main colour'}</div>
       <div className="jinv-swatches">
         {SWATCHES.map((c) => (
           <div
@@ -70,6 +71,7 @@ const SettingsTab: React.FC = () => {
             style={{ background: c }}
             key={c}
             onClick={() => pick(c)}
+            onMouseEnter={() => sfx.hover()}
           />
         ))}
       </div>
