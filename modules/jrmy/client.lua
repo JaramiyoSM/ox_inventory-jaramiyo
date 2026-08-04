@@ -29,56 +29,101 @@ RegisterNUICallback('jrmyToggleHair', function(_, cb)
     end
 end)
 
--- Toggle a clothing piece on/off. Native and fail-safe: it stores the current
--- component/prop and puts it back, so a piece can never get stuck. Components
--- hide by drawable 0; props hide with ClearPedProp.
-local CLOTHING = {
-    mask = { kind = 'comp', id = 1 },
-    hat = { kind = 'prop', id = 0 },
-    glasses = { kind = 'prop', id = 1 },
-    neck = { kind = 'comp', id = 7 },
-    top = { kind = 'comp', id = 11 },
-    vest = { kind = 'comp', id = 9 },
-    torso = { kind = 'comp', id = 3 },
-    bag = { kind = 'comp', id = 5 },
-    watch = { kind = 'prop', id = 6 },
-    gloves = { kind = 'comp', id = 3 },
-    pants = { kind = 'comp', id = 4 },
-    shoes = { kind = 'comp', id = 6 },
+-- Toggle a clothing piece on/off, with the dressing animation. Native and
+-- fail-safe: stores what was on and restores it, so a piece can never get
+-- stuck. Each ped component has its own "empty" value (EMPTY below); using 0
+-- for everything would just swap to a default outfit instead of removing it.
+local COMPONENTS = { mask = 1, neck = 7, top = 11, vest = 9, torso = 3, bag = 5, gloves = 3, pants = 4, shoes = 6 }
+local PROPS = { hat = 0, glasses = 1, watch = 6 }
+local EMPTY = { [1] = 0, [3] = 15, [4] = 61, [5] = 0, [6] = 34, [7] = 0, [9] = 0, [11] = 15 }
+local ANIM = {
+    hat = { dict = 'clothingprops', name = 'take_off', wait = 500 },
+    glasses = { dict = 'clothingspecs', name = 'take_off', wait = 500 },
+    watch = { dict = 'clothingtie', name = 'try_tie_positive_a', wait = 700 },
+    mask = { dict = 'clothingprops', name = 'take_off', wait = 500 },
+    neck = { dict = 'clothingtie', name = 'try_tie_positive_a', wait = 700 },
+    top = { dict = 'clothingshirt', name = 'try_shirt_positive_d', wait = 800 },
+    vest = { dict = 'clothingshirt', name = 'try_shirt_positive_d', wait = 800 },
+    torso = { dict = 'clothingshirt', name = 'try_shirt_positive_d', wait = 800 },
+    gloves = { dict = 'clothingshirt', name = 'try_shirt_positive_d', wait = 800 },
+    bag = { dict = 'clothingshirt', name = 'try_shirt_positive_d', wait = 800 },
+    pants = { dict = 'clothingtrousers', name = 'try_trousers_positive_a', wait = 900 },
+    shoes = { dict = 'clothingshoes', name = 'try_shoes_positive_a', wait = 900 },
 }
 local savedClothing = {}
+local clothingBusy = false
+
+local function playDressAnim(piece)
+    local a = ANIM[piece]
+    if not a then return 0 end
+    RequestAnimDict(a.dict)
+    local tries = 0
+    while not HasAnimDictLoaded(a.dict) and tries < 50 do
+        Wait(20)
+        tries = tries + 1
+    end
+    if not HasAnimDictLoaded(a.dict) then return 0 end
+    -- flag 49 = upper-body partial, so the player can keep walking
+    TaskPlayAnim(cache.ped or PlayerPedId(), a.dict, a.name, 3.0, 3.0, -1, 49, 0, false, false, false)
+    return a.wait
+end
+
+local function stopDressAnim(piece)
+    local a = ANIM[piece]
+    if not a then return end
+    local ped = cache.ped or PlayerPedId()
+    if IsEntityPlayingAnim(ped, a.dict, a.name, 3) then StopAnimTask(ped, a.dict, a.name, 1.0) end
+    RemoveAnimDict(a.dict)
+end
 
 RegisterNUICallback('jrmyToggleClothing', function(data, cb)
     cb(1)
 
-    local piece = CLOTHING[data.piece]
-    if not piece then return end
+    local piece = data.piece
+    local comp = COMPONENTS[piece]
+    local prop = PROPS[piece]
+    if not comp and not prop then return end
 
-    local ped = cache.ped or PlayerPedId()
-    local saved = savedClothing[data.piece]
+    -- one piece at a time, or spamming chains animations into a weird pose
+    if clothingBusy then return end
+    clothingBusy = true
 
-    if saved then
-        if piece.kind == 'comp' then
-            SetPedComponentVariation(ped, piece.id, saved.drawable, saved.texture, 0)
-        elseif saved.drawable == -1 then
-            ClearPedProp(ped, piece.id)
-        else
-            SetPedPropIndex(ped, piece.id, saved.drawable, saved.texture, true)
-        end
-        savedClothing[data.piece] = nil
-    elseif piece.kind == 'comp' then
-        savedClothing[data.piece] = {
-            drawable = GetPedDrawableVariation(ped, piece.id),
-            texture = GetPedTextureVariation(ped, piece.id),
-        }
-        SetPedComponentVariation(ped, piece.id, 0, 0, 0)
-    else
-        savedClothing[data.piece] = {
-            drawable = GetPedPropIndex(ped, piece.id),
-            texture = GetPedPropTextureIndex(ped, piece.id),
-        }
-        ClearPedProp(ped, piece.id)
-    end
+    CreateThread(function()
+        -- pcall so clothingBusy is ALWAYS released, even if a native fails
+        pcall(function()
+            local wait = playDressAnim(piece)
+            -- the garment changes MID-gesture, not at the start
+            if wait > 0 then Wait(wait) end
+
+            local ped = cache.ped or PlayerPedId()
+            local saved = savedClothing[piece]
+
+            if prop then
+                if saved then
+                    if saved.drawable and saved.drawable ~= -1 then
+                        SetPedPropIndex(ped, prop, saved.drawable, saved.texture or 0, true)
+                    end
+                    savedClothing[piece] = nil
+                else
+                    savedClothing[piece] = { drawable = GetPedPropIndex(ped, prop), texture = GetPedPropTextureIndex(ped, prop) }
+                    ClearPedProp(ped, prop)
+                end
+            elseif saved then
+                SetPedComponentVariation(ped, comp, saved.drawable, saved.texture, 0)
+                savedClothing[piece] = nil
+            else
+                savedClothing[piece] = { drawable = GetPedDrawableVariation(ped, comp), texture = GetPedTextureVariation(ped, comp) }
+                SetPedComponentVariation(ped, comp, EMPTY[comp] or 0, 0, 0)
+            end
+
+            if wait > 0 then
+                Wait(400)
+                stopDressAnim(piece)
+            end
+        end)
+
+        clothingBusy = false
+    end)
 end)
 
 -- Multi-job: the window asks for the list when it opens.

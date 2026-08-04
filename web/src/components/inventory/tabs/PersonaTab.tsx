@@ -52,7 +52,7 @@ const PersonaTab: React.FC = () => {
         {CLOTH.map((c) => (
           <div className="jinv-cslot" key={c.piece} onClick={() => toggleClothing(c.piece)}>
             <span className="jinv-cico" style={{ ['--src' as any]: `url(${c.icon})` }} />
-            <span>{c.label}</span>
+            <span>{Locale['jrmy_' + c.piece] || c.label}</span>
           </div>
         ))}
       </div>

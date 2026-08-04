@@ -1,61 +1,60 @@
 # ox_inventory &#183; Jaramiyo's cute edit ✿
 
-A cute rebuild of ox_inventory in my soft cacao + rose "uwu" style: a single
-rounded panel with **three tabs** —
+A cute rebuild of ox_inventory in my soft cacao + rose "uwu" style — a single
+rounded panel with **three tabs**:
 
-- **Inventory** — your inventory and the secondary one, each a card with a header
-  (icon + name + weight) and a live item **search**, plus a bottom control bar.
-- **Appearance** — **clothing** slots you can toggle on/off (native) and an
-  **actions** section with two extras: **Multi Job** and **toggle hair**.
-- **Settings** — the controls cheatsheet and a **colour picker** that re-tints
-  the whole UI live (and remembers your choice).
+- **Inventory** &mdash; your inventory (and any container you open, stacked below),
+  each a card with a header (icon + name + weight) and a live **item search**,
+  plus a fixed control bar (quantity · use · give · close).
+- **Appearance** &mdash; **clothing** slots you can put on / take off with the
+  in-game dressing **animation**, and an **actions** section with two extras:
+  **Multi Job** and **toggle hair**.
+- **Settings** &mdash; the controls cheatsheet and a **colour picker** that
+  re-tints the whole UI live (and remembers your choice).
 
-Warm slots that lift and glow rose on hover, cute tooltips / context menu /
-hotbar, redesigned item notifications, bundled fonts, and little synth **sound
-effects** (with a mute toggle).
+Warm slots that lift and glow on hover, cute tooltips / context menu / hotbar,
+redesigned item notifications, bundled fonts, and little synthesised **sound
+effects** — all my own clean source, no compiled black boxes. Everything is
+**bilingual (English / Spanish)** straight from `locales/`.
 
-The whole visual layer is my own clean source (no compiled black boxes). All of
-ox_inventory's original systems — items, stashes, shops, crafting, weapons,
-weight, drag-and-drop, locales — are Overextended's and untouched.
+The whole inventory is the full, open resource: ox_inventory's original systems
+(items, stashes, shops, crafting, weapons, weight, drag-and-drop) are
+Overextended's and untouched — I only rebuilt the interface and added the two
+extra actions.
 
-## What's in it
+## Configuration
 
-**Look &amp; feel:**
+Everything is set with convars (put them in your `server.cfg`):
 
-- Cacao + soft-pink theme, rounded slots that glow rose on hover, cute tooltips,
-  context menu, hotbar and redesigned item-notification cards.
-- Each inventory is a **card** with a rich header (icon + name + weight) and a
-  client-side **item search** that dims non-matching items — positions and
-  drag-and-drop stay untouched.
-- **Baloo 2 / Karla / JetBrains Mono** bundled locally (no CDN, works offline).
-- Soft Web-Audio **sounds** (hover / pickup / drop / use / open / close) with a
-  mute toggle in the controls dialog.
+```cfg
+# accent colour framework picks up (players can also change it in Settings)
+setr inventory:framework "esx"        # or "qbx"
 
-**Actions menu (2 extras):** a rose button opens a little menu with —
+# Multi Job — how many jobs a player can hold in their pool
+setr inventory:jrmyMaxJobs 3
+```
 
-- **Toggle hair** &mdash; hides/shows the ped's hair instantly. Native, no framework.
-- **Multi Job** &mdash; a self-contained multi-job for **ESX** and **Qbox**: each
-  player keeps a small pool of jobs (stored in their metadata) and can switch the
-  active one or leave one.
-  - The active job is always in the pool. Max jobs: convar `inventory:jrmyMaxJobs`
-    (default `3`).
-  - Other resources (job centres) add jobs to a player's pool:
-    `exports.ox_inventory:jrmyMultijobAdd(source, 'police', 0)`
-  - The framework is read from the `inventory:framework` convar (the same one
-    ox_inventory already uses). Every change is validated server-side; the NUI is
-    never trusted.
+- **Multi Job** is self-contained for **ESX** and **Qbox**: each player keeps a
+  small pool of jobs in their metadata and can switch the active one or leave
+  one. The active job is always in the pool, and everything is validated
+  server-side (the NUI is never trusted).
+- Job centres / other resources add a job to a player's pool with:
+  `exports.ox_inventory:jrmyMultijobAdd(source, 'police', 0)`
+- **Toggle hair** and the **clothing** slots are native (no framework), fail-safe
+  (they store what was on and restore it, so a piece can never get stuck) and
+  play the game's dressing animation.
+
+## Languages
+
+`locales/en.json` and `locales/es.json` include every string the UI adds
+(`jrmy_*` keys). Set `setr ox:locale "es"` (or `en`) and the interface follows.
+Add the same keys to another locale file to translate it further.
 
 ## Install
 
-**Full resource (recommended):** download or clone, rename the folder to
-`ox_inventory`, and use it in place of your current one. Based on ox_inventory
-`2.47.9`. This includes the Multi Job + toggle-hair actions.
-
-**Just the look:** copy the **`web/build`** folder over your existing
-`ox_inventory/web/build`. You get the full cute UI + sounds; the actions-menu
-button appears, but its two actions need the Lua — for those, use the full
-resource (or also copy `modules/jrmy/` and add the two script lines to
-`fxmanifest.lua`).
+Download or clone, rename the folder to `ox_inventory`, and use it in place of
+your current one. It's the complete resource (source **and** the compiled
+`web/build`), based on ox_inventory `2.47.9`.
 
 ## Build it yourself (optional)
 
@@ -68,11 +67,11 @@ npm run build
 ## Credits
 
 - **ox_inventory** by **[Overextended](https://github.com/overextended/ox_inventory)** (Linden, Luke, Dunak and contributors) &mdash; the entire inventory is their work.
-- UI redesign, sounds, and the Multi Job + toggle-hair actions: **Jaramiyo** ✿
+- UI rebuild, sounds, and the Multi Job / appearance actions: **Jaramiyo** ✿
 
 ## License
 
 **GPL-3.0-or-later**, the same as the original. The full license text is in
 [LICENSE](LICENSE) and the attribution notice in [NOTICE.md](NOTICE.md) &mdash;
 both preserved as the licence requires. This is a modified version of
-ox_inventory, and the modifications are released under GPL-3.0-or-later as well.
+ox_inventory, released under GPL-3.0-or-later as well.
